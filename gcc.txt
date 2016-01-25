@@ -1,0 +1,2 @@
+gcc -o socketServer8 socketServer8.c `mysql_config --cflags` `mysql_config --libs`
+
