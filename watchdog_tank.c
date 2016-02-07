@@ -26,9 +26,9 @@ int main(void)
     MYSQL      *MySQLConnection = NULL;
 
     const char *hostName = "localhost";
-    const char *userId   = "tempuser";
+    const char *userId   = "espuser";
     const char *password = "M@t0rb1k3pi";
-    const char *DB       = "temps";
+    const char *DB       = "tanklevels";
 
     MySQLConnection = mysql_init( NULL );
 
@@ -48,7 +48,7 @@ int main(void)
     char buffer [500];
     while(1) {  // main accept() loop
 
-        sprintf(buffer, "SELECT * FROM temp_rt\0");
+        sprintf(buffer, "SELECT * FROM tanklevel_rt\0");
         printf(buffer);
         printf("\n");
 
@@ -98,7 +98,7 @@ int main(void)
                     {
                         printf("ALARM for %d\n", id);
                         alarmed[id] = 1;
-sprintf(buffer,"curl -u o.JnTIFQ2hlubf79J6MEdQ9KfvJ77iwDoC: https://api.pushbullet.com/v2/pushes -d type=note -d title='Temp alarm ID %d' -d body='Alarm on ID:%d. Down from %s for %.0f seconds'", id, id, row[1], seconds);
+sprintf(buffer,"curl -u o.JnTIFQ2hlubf79J6MEdQ9KfvJ77iwDoC: https://api.pushbullet.com/v2/pushes -d type=note -d title='Tank alarm ID %d' -d body='Alarm on ID:%d. Down from %s for %.0f seconds'", id, id, row[1], seconds);
 			printf("%s\n",buffer);
 			system(buffer);
                     }
@@ -112,7 +112,7 @@ sprintf(buffer,"curl -u o.JnTIFQ2hlubf79J6MEdQ9KfvJ77iwDoC: https://api.pushbull
                     if (alarmed[id] == 1)
                     {
                         printf("Disable alarm for %d\n", id);
-sprintf(buffer,"curl -u o.JnTIFQ2hlubf79J6MEdQ9KfvJ77iwDoC: https://api.pushbullet.com/v2/pushes -d type=note -d title='Temp alarm removed ID %d' -d body='Alarm on ID:%d removed'", id, id);
+sprintf(buffer,"curl -u o.JnTIFQ2hlubf79J6MEdQ9KfvJ77iwDoC: https://api.pushbullet.com/v2/pushes -d type=note -d title='Tank alarm removed ID %d' -d body='Alarm on ID:%d removed'", id, id);
                         printf("%s\n",buffer);
                         system(buffer);
                     }
