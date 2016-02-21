@@ -18,6 +18,25 @@
 
 #include <mysql.h>
 
+
+char* do_console_command_get_result (char* command)
+{
+	FILE* pipe = popen(command, "r");		//Send the command, popen exits immediately
+	if (!pipe)
+		return "ERROR";
+
+//	char buffer[128];
+	char* result = "";
+//	while(!feof(pipe))						//Wait for the output resulting from the command
+//	{
+//		if(fgets(buffer, 128, pipe) != NULL)
+//                strcat(result, buffer);
+//	}
+	pclose(pipe);
+	return(result);
+}
+
+
 int main(void)
 {
     // Connect to the database 
@@ -100,7 +119,10 @@ int main(void)
                         alarmed[id] = 1;
 sprintf(buffer,"curl -u o.JnTIFQ2hlubf79J6MEdQ9KfvJ77iwDoC: https://api.pushbullet.com/v2/pushes -d type=note -d title='Temp alarm ID %d' -d body='Alarm on ID:%d. Down from %s for %.0f seconds'", id, id, row[1], seconds);
 			printf("%s\n",buffer);
-			system(buffer);
+			//system(buffer);
+                        char * result;
+                        result = do_console_command_get_result(buffer);
+                        printf("Result:%s",result);
                     }
                     else
                     {
@@ -114,7 +136,10 @@ sprintf(buffer,"curl -u o.JnTIFQ2hlubf79J6MEdQ9KfvJ77iwDoC: https://api.pushbull
                         printf("Disable alarm for %d\n", id);
 sprintf(buffer,"curl -u o.JnTIFQ2hlubf79J6MEdQ9KfvJ77iwDoC: https://api.pushbullet.com/v2/pushes -d type=note -d title='Temp alarm removed ID %d' -d body='Alarm on ID:%d removed'", id, id);
                         printf("%s\n",buffer);
-                        system(buffer);
+                        //system(buffer);
+                        char * result;
+                        result = do_console_command_get_result(buffer);
+                        printf("Result:%s",result);
                     }
                     alarmed[id] = 0;
                 }
